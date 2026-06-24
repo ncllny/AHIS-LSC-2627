@@ -194,7 +194,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 <body>
 <div class="shell">
 
-<!-- HEADER -->
 <header>
   <div class="logo">
     <div class="lorbs">
@@ -209,7 +208,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   <div class="spill"><div class="sdot" id="sdot"></div><span id="slabel">Loading…</span></div>
 </header>
 
-<!-- NAV -->
 <nav>
   <div class="ntab on"  onclick="go('rates')">Points Rate</div>
   <div class="ntab"     onclick="go('give')">Give Marbles</div>
@@ -218,10 +216,8 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   <div class="ntab"     onclick="go('settings')">Settings</div>
 </nav>
 
-<!-- ═══════════════════════════════════════ -->
 <div class="wrap">
 
-<!-- ① POINTS RATE -->
 <div id="view-rates" class="view on">
   <div class="ttl" style="margin-bottom:16px;">Current point values — based on global stock</div>
   <div class="rate-grid" id="rate-cards"></div>
@@ -234,17 +230,14 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   </div>
 </div>
 
-<!-- ② GIVE MARBLES -->
 <div id="view-give" class="view"><div class="steps">
 <div class="step-box" id="gS1"><div class="step-head"><div class="snum" style="background:var(--cPb);color:var(--cPt);">1</div><div class="stitle">Select a marble colour</div><div class="schosen" id="gC1"></div></div><div class="step-body"><div class="cpick" id="give-cpick"></div></div></div>
 <div class="step-box locked" id="gS2"><div class="step-head"><div class="snum" style="background:var(--cPb);color:var(--cPt);">2</div><div class="stitle">How many marbles to add to stock?</div></div><div class="step-body"><div class="amtrow"><div class="stepper"><button class="stbtn" onclick="gadj(-1)">−</button><input class="stinp" type="number" id="give-amt" value="1" min="1"><button class="stbtn" onclick="gadj(1)">+</button></div><div class="qbtns"><button class="qbtn" onclick="gset(1)">1</button><button class="qbtn" onclick="gset(5)">5</button><button class="qbtn" onclick="gset(10)">10</button><button class="qbtn" onclick="gset(25)">25</button><button class="qbtn" onclick="gset(50)">50</button></div></div><div class="cbar"><div class="cprev" id="give-prev">Select a colour first</div><button class="btn lg gg" onclick="confirmGive()">Add to stock</button></div></div></div>
 </div></div>
 
-<!-- ③ TAKE MARBLES -->
 <div id="view-take" class="view">
   <div class="steps">
 
-    <!-- Step 1: set point rates -->
     <div class="step-box" id="tS1">
       <div class="step-head">
         <div class="snum" style="background:var(--cRb);color:var(--cRt);">1</div>
@@ -261,7 +254,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
       </div>
     </div>
 
-    <!-- Step 2: select team -->
     <div class="step-box locked" id="tS2">
       <div class="step-head">
         <div class="snum" style="background:var(--cRb);color:var(--cRt);">2</div>
@@ -273,7 +265,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
       </div>
     </div>
 
-    <!-- Step 3: colour + amount -->
     <div class="step-box locked" id="tS3">
       <div class="step-head">
         <div class="snum" style="background:var(--cRb);color:var(--cRt);">3</div>
@@ -308,16 +299,13 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   </div>
 </div>
 
-<!-- ④ LEADERBOARD -->
 <div id="view-board" class="view">
   <div class="ttl" style="margin-bottom:16px;">Teams ranked by total points earned</div>
   <div class="lb" id="lb"></div>
 </div>
 
-<!-- ⑤ SETTINGS -->
 <div id="view-settings" class="view">
 
-  <!-- Firebase -->
   <div id="fbbanner">
     <div style="font-size:22px;flex-shrink:0;margin-top:2px;">🔥</div>
     <div style="flex:1;">
@@ -332,7 +320,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
     </div>
   </div>
 
-  <!-- Base stock -->
   <div class="card" style="margin-bottom:20px;">
     <div class="ttl">Adjust base marble stock</div>
     <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Base stock is separate from team holdings. Positive = add, negative = subtract. "Set exact" replaces base stock with entered values.</p>
@@ -343,7 +330,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
     </div>
   </div>
 
-  <!-- Team names -->
   <div class="card" style="margin-bottom:20px;">
     <div class="ttl">Edit team names</div>
     <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Change names here. Your marble counts and points will stay the same.</p>
@@ -353,7 +339,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
     </div>
   </div>
 
-  <!-- Reset -->
   <div class="card" style="margin-bottom:20px;">
     <div class="ttl">Danger zone</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -363,16 +348,13 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
     </div>
   </div>
 
-  <!-- Activity log -->
   <div class="ttl">Activity log</div>
   <div class="log-wrap" id="log-wrap"></div>
   <div style="margin-top:8px;"><button class="btn sm" onclick="clearLog()">Clear log</button></div>
 
 </div>
 
-</div><!-- /wrap -->
-</div><!-- /shell -->
-<div id="toast"></div>
+</div></div><div id="toast"></div>
 
 <script>
 // ─────────────────────────────────────────────────────────────────────────────
@@ -397,7 +379,7 @@ const RLABELS=['Least common','2nd least','Middle','2nd most','Most common'];
 // STATE
 // ─────────────────────────────────────────────────────────────────────────────
 let DB=null;
-let FBU=null;
+let FBU='https://ahis-lsc-2627-default-rtdb.asia-southeast1.firebasedatabase.app';
 let fbPoll=null;
 
 // Give flow
@@ -435,6 +417,7 @@ function calcPtVals(gs){
 function lsLoad(){try{const r=localStorage.getItem('mg6');return r?JSON.parse(r):null;}catch(e){return null;}}
 function lsSave(d){try{localStorage.setItem('mg6',JSON.stringify(d));}catch(e){}}
 function lsFBU(){return localStorage.getItem('mg6_fb')||'';}
+// Modified to prioritize your explicit fallback URL if a different local configuration is absent
 function lsSetFBU(u){localStorage.setItem('mg6_fb',u);}
 
 async function fbRead(){if(!FBU)return null;try{const r=await fetch(FBU+'/marble_game.json');return r.ok?await r.json():null;}catch(e){return null;}}
@@ -461,6 +444,12 @@ function startPoll(){
   },4000);
 }
 function dismissFB(){document.getElementById('fbbanner').style.display='none';lsSetFBU('local');setSS('w','Local only');}
+
+// Fallback manual connection option if user changes address in setting tab later
+function updateFBUInputDisplay(url) {
+  const inp = document.getElementById('fbinp');
+  if(inp) inp.value = url;
+}
 
 function ensureSchema(d){
   if(!d.log)d.log=[];
@@ -497,7 +486,7 @@ function go(v){
   if(v==='give')renderGive();
   if(v==='take')renderTake();
   if(v==='board')renderBoard();
-  if(v==='settings'){renderBaseAdj();renderTeamNameEditor();renderLog();}
+  if(v==='settings'){renderBaseAdj();renderTeamNameEditor();renderLog();updateFBUInputDisplay(FBU);}
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -573,6 +562,9 @@ function renderTakeRateInputs(){
   document.getElementById('tS2').classList.toggle('locked',!allSet);
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// THE REST OF THE FUNCTIONS UNCHANGED
+// ─────────────────────────────────────────────────────────────────────────────
 function loadLiveRates(){
   const gs=globalStock();const{pts}=calcPtVals(gs);
   C.forEach(c=>{const inp=document.getElementById('tr-'+c.key);if(inp)inp.value=pts[c.key];});
@@ -605,6 +597,9 @@ function tPickTeam(id){
   updateTakePrev();
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// TRANSACTION UTILS
+// ─────────────────────────────────────────────────────────────────────────────
 function renderTakeCpick(){
   const team=tTeam!==null?DB.teams.find(t=>t.id===tTeam):null;
   document.getElementById('take-cpick').innerHTML=C.map(c=>{
@@ -660,9 +655,6 @@ function confirmTake(){
   tColour=null;document.getElementById('tC3').textContent='';document.getElementById('take-amt').value=1;renderTakeCpick();updateTakePrev();
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// RENDER — LEADERBOARD
-// ─────────────────────────────────────────────────────────────────────────────
 function renderBoard(){
   const teams=[...DB.teams].sort((a,b)=>(b.points||0)-(a.points||0));
   const medals=['🥇','🥈','🥉'];
@@ -674,9 +666,6 @@ function renderBoard(){
   </div>`).join('');
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SETTINGS
-// ─────────────────────────────────────────────────────────────────────────────
 function renderBaseAdj(){
   const el=document.getElementById('base-adj');
   if(!el.querySelector('input')){
@@ -730,9 +719,6 @@ function renderLog(){
 }
 function clearLog(){DB.log=[];saveData();renderLog();toast('Log cleared');}
 
-// ─────────────────────────────────────────────────────────────────────────────
-// RENDER ALL
-// ─────────────────────────────────────────────────────────────────────────────
 function renderAll(){
   renderRates();
   renderGive();
@@ -742,40 +728,45 @@ function renderAll(){
   renderBoard();
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// TOAST
-// ─────────────────────────────────────────────────────────────────────────────
 let tt;
 function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),2600);}
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BOOT
+// BOOT (MODIFIED FOR AUTOMATIC CONNECTION)
 // ─────────────────────────────────────────────────────────────────────────────
 (async function boot(){
   DB=ensureSchema(lsLoad()||mkDefault());
   renderBaseAdj();
 
-  const saved=lsFBU();
-  if(saved&&saved!=='local'){
-    document.getElementById('fbinp').value=saved;
-    document.getElementById('fbbanner').style.display='none';
-    FBU=saved;setSS('w','Connecting…');
-    const rem=await fbRead();
-    if(rem){if(!DB.updatedAt||rem.updatedAt>DB.updatedAt){DB=ensureSchema(rem);lsSave(DB);}setSS('ok','Synced '+new Date(DB.updatedAt).toLocaleTimeString());}
-    else{await fbWrite(DB);setSS('ok','Synced');}
-    startPoll();
-  } else if(saved==='local'){
-    document.getElementById('fbbanner').style.display='none';
-    setSS('w','Local only');
+  // Force system configuration to targeted server URL directly
+  FBU = 'https://ahis-lsc-2627-default-rtdb.asia-southeast1.firebasedatabase.app';
+  lsSetFBU(FBU);
+  
+  // Hide UI configuration options immediately since connection is automatic
+  const fbBannerEl = document.getElementById('fbbanner');
+  if(fbBannerEl) fbBannerEl.style.display = 'none';
+  
+  updateFBUInputDisplay(FBU);
+  setSS('w','Connecting…');
+
+  const rem=await fbRead();
+  if(rem){
+    if(!DB.updatedAt || rem.updatedAt > DB.updatedAt){
+      DB=ensureSchema(rem);
+      lsSave(DB);
+    }
+    setSS('ok','Synced '+new Date(DB.updatedAt).toLocaleTimeString());
   } else {
-    setSS('w','Not connected');
+    await fbWrite(DB);
+    setSS('ok','Synced');
   }
+  startPoll();
 
   // pre-load live rates into take tab
   loadLiveRates();
   renderAll();
 
-  // cross-tab sync
+  // cross-tab local fallback polling
   setInterval(()=>{if(!FBU){const f=lsLoad();if(f&&f.updatedAt!==DB.updatedAt){DB=ensureSchema(f);renderAll();}}},2000);
 })();
 </script>
