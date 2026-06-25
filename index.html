@@ -394,7 +394,7 @@ let tColour=null; // colour key
 // ─────────────────────────────────────────────────────────────────────────────
 function mkDefault(){
   const teams=TNAMES.map((name,i)=>{const m={};C.forEach(c=>m[c.key]=0);return{id:i,name,marbles:m,points:0};});
-  const stock={};C.forEach(c=>stock[c.key]=50);
+  const stock={};C.forEach(c=>stock[c.key]=20);
   return{teams,stock,log:[],updatedAt:Date.now()};
 }
 
