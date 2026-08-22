@@ -508,6 +508,10 @@ function ensureSchema(d){
   d.activeColours=d.activeColours.filter(k=>ALL_CKEYS.includes(k));
   if(!d.activeColours.length)d.activeColours=ALL_CKEYS.slice();
   if(!d.takeRates||typeof d.takeRates!=='object')d.takeRates={};
+  const initialRates=initialTakeRates(d);
+  C.forEach(c=>{
+    if(typeof d.takeRates[c.key]!=='number'||d.takeRates[c.key]<0)d.takeRates[c.key]=initialRates[c.key];
+  });
   if(typeof d.settingsPasswordHash!=='string')d.settingsPasswordHash=null;
   if(!d.stock)d.stock={};
   C.forEach(c=>{if(typeof d.stock[c.key]!=='number')d.stock[c.key]=0;});
@@ -545,6 +549,23 @@ function calcPtVals(gs){
     ranks[x.key]=i;
   });
   return{pts,ranks,sorted,N};
+}
+
+// Creates a one-time starting rate set for new or legacy game data.
+// These values are saved and are not recalculated when stock changes.
+function initialTakeRates(state){
+  const activeKeys=Array.isArray(state.activeColours)&&state.activeColours.length
+    ?state.activeColours.filter(k=>ALL_CKEYS.includes(k)):ALL_CKEYS.slice();
+  const active=C.filter(c=>activeKeys.includes(c.key));
+  const stock={};
+  active.forEach(c=>{
+    stock[c.key]=(state.stock?.[c.key]||0)+(state.teams||[]).reduce((sum,t)=>sum+(t.marbles?.[c.key]||0),0);
+  });
+  const sorted=active.map(c=>({key:c.key,count:stock[c.key]||0})).sort((a,b)=>a.count-b.count);
+  const rates={};
+  C.forEach(c=>rates[c.key]=1);
+  sorted.forEach((item,index)=>{rates[item.key]=Math.min(index,sorted.length-1-index)+1;});
+  return rates;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -898,10 +919,9 @@ function renderTake(){
   renderTakeCpick();
   updateTakePrev();
 }
-// The current effective rate for a colour: a saved override, else the live-calculated value
+// Take Marbles always uses the saved Settings rate. Stock changes never recalculate it.
 function effectiveRate(key){
-  const{pts}=calcPtVals(globalStock());
-  return(DB.takeRates&&DB.takeRates[key]!==undefined)?DB.takeRates[key]:pts[key];
+  return DB.takeRates[key];
 }
 // Read-only rate display on the Take Marbles page
 function renderTakeRateDisplay(){
@@ -914,11 +934,10 @@ function renderTakeRateDisplay(){
 }
 // Editable rate inputs, shown only inside unlocked Settings
 function renderSettingsRateInputs(){
-  const gs=globalStock(),{pts}=calcPtVals(gs);
   const el=document.getElementById('settings-rate-inputs');
   if(!el)return;
   el.innerHTML=AC().map(c=>{
-    const val=(DB.takeRates&&DB.takeRates[c.key]!==undefined)?DB.takeRates[c.key]:pts[c.key];
+    const val=effectiveRate(c.key);
     return`<div class="ri-field">
       <label style="color:${c.htc};">${c.emoji} ${c.label}</label>
       <input type="number" id="sr-${c.key}" value="${val}" min="0" step="0.1"
@@ -944,7 +963,7 @@ function pushSettingsRates(){
 function useLiveRates(){
   const gs=globalStock(),{pts}=calcPtVals(gs);
   AC().forEach(c=>{const i=document.getElementById('sr-'+c.key);if(i)i.value=pts[c.key];});
-  pushSettingsRates();toast('Live rates loaded');
+  pushSettingsRates();toast('Current stock-based rates saved');
 }
 function renderTakeTeamGrid(){
   document.getElementById('take-tgrid').innerHTML=DB.teams.map(t=>
