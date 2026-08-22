@@ -52,6 +52,9 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 .btn.rr:hover{background:rgba(232,93,93,.22);}
 .btn.sm{padding:5px 11px;font-size:12px;}
 .btn.lg{padding:12px 28px;font-size:15px;font-weight:600;}
+.btn:disabled{opacity:.35;cursor:not-allowed;}
+.btn:disabled:hover{background:var(--s2);}
+.ri-value{width:64px;text-align:center;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:7px 4px;font-family:var(--mono);font-size:15px;font-weight:600;color:var(--tx);}
 .steps{display:flex;flex-direction:column;gap:22px;}
 .step-box{border-radius:var(--rl);border:1px solid var(--bd);background:var(--s1);overflow:hidden;}
 .step-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--bd);background:var(--s2);}
@@ -85,9 +88,7 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 .cbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;}
 .cprev{flex:1;min-width:180px;background:var(--s2);border-radius:var(--r);padding:10px 14px;font-size:12px;color:var(--mu);font-family:var(--mono);line-height:1.6;}
 .cprev strong{color:var(--tx);}
-.rate-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:24px;}
-@media(max-width:620px){.rate-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:400px){.rate-grid{grid-template-columns:repeat(2,1fr);}}
+.rate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:24px;}
 .rcard{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);padding:18px 12px;text-align:center;transition:transform .14s;}
 .rcard:hover{transform:translateY(-2px);}
 .rorb{width:50px;height:50px;border-radius:50%;margin:0 auto 10px;position:relative;}
@@ -111,6 +112,7 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 .ri-field label{font-size:11px;font-weight:600;letter-spacing:.04em;}
 .ri-field input{width:64px;text-align:center;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:7px 4px;font-family:var(--mono);font-size:15px;font-weight:600;color:var(--tx);}
 .ri-field input:focus{outline:none;border-color:var(--cP);}
+.ri-field input:disabled{opacity:.5;cursor:not-allowed;}
 .lb{background:var(--s1);border:1px solid var(--bd);border-radius:var(--rl);overflow:hidden;}
 .lbrow{display:flex;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid var(--bd);transition:background .1s;}
 .lbrow:last-child{border:none;}
@@ -132,12 +134,27 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 .log-row:last-child{border:none;}
 .log-time{color:var(--mu);font-family:var(--mono);flex-shrink:0;font-size:11px;}
 .log-msg{color:var(--tx);flex:1;}
+.team-row{display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:8px 8px 8px 12px;}
+.team-row input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:8px 10px;color:var(--tx);font-family:var(--font);font-size:13px;}
+.team-row input:focus{outline:none;border-color:var(--cP);}
+.xbtn{width:26px;height:26px;flex-shrink:0;border-radius:50%;border:1px solid var(--bd2);background:var(--s1);color:var(--cRt);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+.xbtn:hover{background:var(--cRb);border-color:var(--cR);}
+.add-team-row{display:flex;gap:8px;margin-top:12px;}
+.add-team-row input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:9px 12px;color:var(--tx);font-family:var(--font);font-size:13px;}
+.add-team-row input:focus{outline:none;border-color:var(--cP);}
+.colour-toggle-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.ctog{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--s2);border:1.5px solid var(--bd);border-radius:var(--rl);cursor:pointer;font-family:var(--font);transition:border-color .13s,opacity .13s;}
+.ctog.off{opacity:.4;}
+.ctog .corb{width:26px;height:26px;}
+.ctog .cname{font-size:12px;font-weight:600;}
+.ri-field input:disabled{opacity:.45;cursor:not-allowed;}
+.btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none;}
 /* conflict toast */
 #conflict-banner{display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2a1f10;border:1px solid var(--cY);border-radius:var(--rl);padding:12px 18px;font-size:13px;color:var(--cYt);z-index:400;max-width:400px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.5);}
 #conflict-banner.on{display:block;}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(50px);background:var(--s2);border:1px solid var(--bd2);border-radius:20px;padding:8px 20px;font-size:13px;color:var(--tx);opacity:0;pointer-events:none;z-index:300;white-space:nowrap;transition:transform .22s,opacity .22s;}
 #toast.on{transform:translateX(-50%) translateY(0);opacity:1;}
-@media(max-width:600px){.rate-grid{grid-template-columns:repeat(3,1fr);}.tgrid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}}
+@media(max-width:600px){.tgrid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-thumb{background:var(--fa);border-radius:3px;}
 </style>
@@ -229,22 +246,18 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   <div class="steps">
     <div class="step-box" id="tS1">
       <div class="step-head">
-        <div class="snum" style="background:var(--cRb);color:var(--cRt);">1</div>
-        <div class="stitle">Set point rate per marble colour</div>
-        <div class="schosen" id="tC1" style="color:var(--cG);"></div>
+        <div class="snum" style="background:var(--cRb);color:var(--cRt);">i</div>
+        <div class="stitle">Current point rate per marble colour</div>
+        <div class="schosen" id="tC1" style="color:var(--mu);font-weight:400;">View only — edit in Settings</div>
       </div>
       <div class="step-body">
-        <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">How many points each marble colour is worth when taken from a team.</p>
+        <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">How many points each marble colour is worth when taken from a team. These rates are shared by every device.</p>
         <div class="rate-inputs" id="take-rate-inputs"></div>
-        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-          <button class="btn sm pp" onclick="loadLiveRates()">Load live rates</button>
-          <button class="btn sm" onclick="clearTakeRates()">Clear all</button>
-        </div>
       </div>
     </div>
-    <div class="step-box locked" id="tS2">
+    <div class="step-box" id="tS2">
       <div class="step-head">
-        <div class="snum" style="background:var(--cRb);color:var(--cRt);">2</div>
+        <div class="snum" style="background:var(--cRb);color:var(--cRt);">1</div>
         <div class="stitle">Select team that gives the marbles</div>
         <div class="schosen" id="tC2" style="color:var(--cR);"></div>
       </div>
@@ -252,7 +265,7 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
     </div>
     <div class="step-box locked" id="tS3">
       <div class="step-head">
-        <div class="snum" style="background:var(--cRb);color:var(--cRt);">3</div>
+        <div class="snum" style="background:var(--cRb);color:var(--cRt);">2</div>
         <div class="stitle">Select marble colour &amp; amount taken</div>
         <div class="schosen" id="tC3" style="color:var(--cR);"></div>
       </div>
@@ -291,35 +304,91 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 
 <!-- ⑤ SETTINGS -->
 <div id="view-settings" class="view">
-  <div class="card" style="margin-bottom:20px;">
-    <div class="ttl">Adjust base marble stock</div>
-    <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Positive = add, negative = subtract. "Set exact" replaces base stock with entered values.</p>
-    <div class="base-adj" id="base-adj"></div>
-    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
-      <button class="btn pp" onclick="applyBase()">Apply adjustment</button>
-      <button class="btn" onclick="setExactBase()">Set exact amounts</button>
+
+  <div id="settings-locked" style="display:none;">
+    <div class="card" style="max-width:360px;margin:20px auto;text-align:center;">
+      <div class="ttl" style="margin-bottom:6px;">🔒 Settings locked</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:16px;">Enter the settings password to continue. This device will stay unlocked until the password changes.</p>
+      <input type="password" id="settings-pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')submitSettingsPassword()"
+        style="width:100%;text-align:center;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:10px 12px;color:var(--tx);font-family:var(--font);font-size:14px;margin-bottom:12px;">
+      <button class="btn pp lg" style="width:100%;" onclick="submitSettingsPassword()">Unlock</button>
     </div>
   </div>
 
-  <div class="card" style="margin-bottom:20px;">
-    <div class="ttl">Edit team names</div>
-    <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Rename teams. Marble counts and points stay the same.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;" id="team-name-editor"></div>
-    <div style="margin-top:14px;"><button class="btn pp" onclick="saveTeamNames()">Save team names</button></div>
-  </div>
+  <div id="settings-content">
 
-  <div class="card" style="margin-bottom:20px;">
-    <div class="ttl">Danger zone</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn rr" onclick="resetPoints()">Reset all points</button>
-      <button class="btn rr" onclick="resetMarbles()">Reset all marbles</button>
-      <button class="btn rr" onclick="resetAll()">Reset everything</button>
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl" id="password-card-ttl">Protect settings with a password</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;" id="password-card-sub">Right now anyone can open Settings. Set a password so only devices that know it can get in.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+        <input type="password" id="new-pw-1" placeholder="New password" style="flex:1;min-width:140px;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:9px 12px;color:var(--tx);font-family:var(--font);font-size:13px;">
+        <input type="password" id="new-pw-2" placeholder="Confirm password" style="flex:1;min-width:140px;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:9px 12px;color:var(--tx);font-family:var(--font);font-size:13px;">
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn pp" id="password-set-btn" onclick="setNewSettingsPassword()">Set password</button>
+        <button class="btn rr" id="password-reset-btn" style="display:none;" onclick="resetSettingsPassword()">Reset password (open to everyone)</button>
+      </div>
     </div>
-  </div>
 
-  <div class="ttl">Activity log</div>
-  <div class="log-wrap" id="log-wrap"></div>
-  <div style="margin-top:8px;"><button class="btn sm" onclick="clearLog()">Clear log</button></div>
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl">Point rate per marble colour</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">How many points each marble colour is worth when taken from a team. Shown as view-only on the Take Marbles page.</p>
+      <div class="rate-inputs" id="settings-rate-inputs"></div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <button class="btn sm pp" onclick="useLiveRates()">Use live rates</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl">Adjust base marble stock</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Positive = add, negative = subtract. "Set exact" replaces base stock with entered values.</p>
+      <div class="base-adj" id="base-adj"></div>
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+        <button class="btn pp" onclick="applyBase()">Apply adjustment</button>
+        <button class="btn" onclick="setExactBase()">Set exact amounts</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl">This device</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">The name shown next to changes this device makes.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <input type="text" id="device-name-input" placeholder="e.g. Coach's phone" style="flex:1;min-width:160px;background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:9px 12px;color:var(--tx);font-family:var(--font);font-size:13px;">
+        <button class="btn pp" onclick="saveDeviceName()">Save name</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl">Manage marble colours</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Turn colours off to remove them from play. Their stock and history stay saved if you turn them back on.</p>
+      <div class="colour-toggle-grid" id="colour-toggles"></div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl">Manage teams</div>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">Rename, add, or delete teams. Deleting a team removes its marbles and points permanently.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;" id="team-name-editor"></div>
+      <div class="add-team-row">
+        <input type="text" id="new-team-name" placeholder="New team name…" onkeydown="if(event.key==='Enter')addTeam()">
+        <button class="btn pp" onclick="addTeam()">+ Add team</button>
+      </div>
+      <div style="margin-top:14px;"><button class="btn pp" onclick="saveTeamNames()">Save team names</button></div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div class="ttl">Danger zone</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn rr" onclick="resetPoints()">Reset all points</button>
+        <button class="btn rr" onclick="resetMarbles()">Reset all marbles</button>
+        <button class="btn rr" onclick="resetAll()">Reset everything</button>
+      </div>
+    </div>
+
+    <div class="ttl">Activity log</div>
+    <div class="log-wrap" id="log-wrap"></div>
+    <div style="margin-top:8px;"><button class="btn sm" onclick="clearLog()">Clear log</button></div>
+
+  </div>
 </div>
 
 </div></div>
@@ -331,18 +400,19 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 // ═══════════════════════════════════════════════════════════════
 const C=[
   {key:'red',   label:'Red',   emoji:'🔴',hex:'#e85d5d',hbg:'rgba(232,93,93,0.14)',  htc:'#ffaaaa'},
+
   {key:'blue',  label:'Blue',  emoji:'🔵',hex:'#4d9fff',hbg:'rgba(77,159,255,0.14)', htc:'#93c5fd'},
   {key:'green', label:'Green', emoji:'🟢',hex:'#52c97a',hbg:'rgba(82,201,122,0.14)', htc:'#86efac'},
   {key:'yellow',label:'Yellow',emoji:'🟡',hex:'#f0c040',hbg:'rgba(240,192,64,0.14)', htc:'#fde68a'},
   {key:'purple',label:'Purple',emoji:'🟣',hex:'#a78bfa',hbg:'rgba(167,139,250,0.14)',htc:'#c4b5fd'},
 ];
+const ALL_CKEYS=C.map(c=>c.key);
 const TNAMES=[
   'Thunder Hawks','Iron Wolves','Crystal Dragons','Storm Eagles','Neon Tigers',
   'Frost Bears','Shadow Panthers','Solar Lions','Ember Falcons','Tide Sharks',
   'Stone Giants','Wind Runners','Blaze Foxes','Deep Ravens','Coral Vipers',
   'Apex Cobras','Lunar Owls','Terra Bulls','Nova Stallions','Dusk Crows'
 ];
-const RLABELS=['Least common','2nd least','Middle','2nd most','Most common'];
 const FBU='https://ahis-lsc-2627-default-rtdb.asia-southeast1.firebasedatabase.app';
 
 // ═══════════════════════════════════════════════════════════════
@@ -357,6 +427,61 @@ let tTeam=null;
 let tColour=null;
 
 // ═══════════════════════════════════════════════════════════════
+// COLOUR HELPERS (active/inactive colours)
+// ═══════════════════════════════════════════════════════════════
+function AC(){
+  const active=(DB&&DB.activeColours)||ALL_CKEYS;
+  return C.filter(c=>active.includes(c.key));
+}
+function ordinal(n){
+  const s=['th','st','nd','rd'],v=n%100;
+  return n+(s[(v-20)%10]||s[v]||s[0]);
+}
+function rankLabel(i,N){
+  if(N<=1)return'Only colour';
+  const fromBottom=i,fromTop=N-1-i;
+  if(fromBottom===fromTop)return'Middle';
+  if(fromBottom<fromTop)return fromBottom===0?'Least common':ordinal(fromBottom+1)+' least';
+  return fromTop===0?'Most common':ordinal(fromTop+1)+' most';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DEVICE IDENTITY & SETTINGS PASSWORD
+// ═══════════════════════════════════════════════════════════════
+function getDeviceId(){
+  let id=localStorage.getItem('mg7_device_id');
+  if(!id){id='dev-'+Math.random().toString(36).slice(2,10);localStorage.setItem('mg7_device_id',id);}
+  return id;
+}
+function getDeviceName(){return localStorage.getItem('mg7_device_name')||'This device';}
+function setDeviceName(n){localStorage.setItem('mg7_device_name',n);}
+function ensureDeviceName(){
+  if(!localStorage.getItem('mg7_device_name')){
+    let name=prompt("What's this device's name? (shown next to changes it makes)",'');
+    name=(name||'').trim();
+    if(!name)name='Device '+getDeviceId().slice(4,8).toUpperCase();
+    setDeviceName(name);
+  }
+}
+function saveDeviceName(){
+  const inp=document.getElementById('device-name-input');
+  const name=(inp.value||'').trim();
+  if(!name){toast('Enter a name first');return;}
+  setDeviceName(name);
+  toast('Device name saved');
+}
+
+async function hashPassword(pw){
+  const enc=new TextEncoder().encode('mg7-salt:'+pw);
+  const buf=await crypto.subtle.digest('SHA-256',enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+function isSettingsUnlocked(){
+  if(!DB||!DB.settingsPasswordHash)return true; // no password set = open to everyone
+  return localStorage.getItem('mg7_unlocked_hash')===DB.settingsPasswordHash;
+}
+
+// ═══════════════════════════════════════════════════════════════
 // DEFAULT DATA
 // ═══════════════════════════════════════════════════════════════
 function mkDefault(){
@@ -365,18 +490,29 @@ function mkDefault(){
     return{id:i,name,marbles:m,points:0};
   });
   const stock={};C.forEach(c=>stock[c.key]=20);
-  return{teams,stock,log:[],version:0,updatedAt:Date.now()};
+  return{teams,stock,log:[],version:0,updatedAt:Date.now(),activeColours:ALL_CKEYS.slice(),nextTeamId:teams.length,takeRates:{},settingsPasswordHash:null};
 }
 
 function ensureSchema(d){
   if(!d)return mkDefault();
   if(!d.log)d.log=[];
   if(typeof d.version!=='number')d.version=0;
-  d.teams=d.teams.map(t=>{
+  if(!Array.isArray(d.activeColours)||!d.activeColours.length)d.activeColours=ALL_CKEYS.slice();
+  d.activeColours=d.activeColours.filter(k=>ALL_CKEYS.includes(k));
+  if(!d.activeColours.length)d.activeColours=ALL_CKEYS.slice();
+  if(!d.takeRates||typeof d.takeRates!=='object')d.takeRates={};
+  if(typeof d.settingsPasswordHash!=='string')d.settingsPasswordHash=null;
+  if(!d.stock)d.stock={};
+  C.forEach(c=>{if(typeof d.stock[c.key]!=='number')d.stock[c.key]=0;});
+  d.teams=(d.teams||[]).map(t=>{
     if(typeof t.points!=='number')t.points=0;
+    if(!t.marbles)t.marbles={};
     C.forEach(c=>{if(typeof t.marbles[c.key]!=='number')t.marbles[c.key]=0;});
     return t;
   });
+  if(typeof d.nextTeamId!=='number'){
+    d.nextTeamId=d.teams.length?Math.max(...d.teams.map(t=>t.id))+1:0;
+  }
   return d;
 }
 
@@ -385,20 +521,23 @@ function ensureSchema(d){
 // ═══════════════════════════════════════════════════════════════
 function globalStock(){
   const gs={};
-  C.forEach(c=>{
+  AC().forEach(c=>{
     gs[c.key]=(DB.stock[c.key]||0)+DB.teams.reduce((s,t)=>s+(t.marbles[c.key]||0),0);
   });
   return gs;
 }
 
 function calcPtVals(gs){
-  const sorted=C.map(c=>({key:c.key,count:gs[c.key]})).sort((a,b)=>a.count-b.count);
+  const active=AC();
+  const N=active.length;
+  const sorted=active.map(c=>({key:c.key,count:gs[c.key]||0})).sort((a,b)=>a.count-b.count);
   const pts={},ranks={};
   sorted.forEach((x,i)=>{
-    pts[x.key]=i===0||i===4?1:i===1||i===3?2:3;
+    const dist=Math.min(i,N-1-i);
+    pts[x.key]=dist+1;
     ranks[x.key]=i;
   });
-  return{pts,ranks,sorted};
+  return{pts,ranks,sorted,N};
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -478,9 +617,26 @@ function applyOpToState(state,op){
   }else if(op.type==='resetMarbles'){
     s.teams.forEach(t=>C.forEach(c=>t.marbles[c.key]=0));
   }else if(op.type==='resetAll'){
-    const fresh=mkDefault();s.teams=fresh.teams;s.stock=fresh.stock;
+    const fresh=mkDefault();s.teams=fresh.teams;s.stock=fresh.stock;s.activeColours=fresh.activeColours;s.nextTeamId=fresh.nextTeamId;s.takeRates=fresh.takeRates;
+  }else if(op.type==='setTakeRates'){
+    s.takeRates={...(s.takeRates||{}),...op.rates};
+  }else if(op.type==='setSettingsPassword'){
+    s.settingsPasswordHash=op.hash;
+  }else if(op.type==='resetSettingsPassword'){
+    s.settingsPasswordHash=null;
   }else if(op.type==='renameTeams'){
     op.names.forEach(({id,name})=>{const t=s.teams.find(x=>x.id===id);if(t)t.name=name;});
+  }else if(op.type==='addTeam'){
+    const m={};C.forEach(c=>m[c.key]=0);
+    const id=(typeof s.nextTeamId==='number'?s.nextTeamId:(s.teams.length?Math.max(...s.teams.map(t=>t.id))+1:0));
+    s.teams.push({id,name:op.name,marbles:m,points:0});
+    s.nextTeamId=id+1;
+  }else if(op.type==='deleteTeam'){
+    s.teams=s.teams.filter(t=>t.id!==op.teamId);
+  }else if(op.type==='setActiveColours'){
+    let cols=op.colours.filter(k=>ALL_CKEYS.includes(k));
+    if(!cols.length)cols=ALL_CKEYS.slice();
+    s.activeColours=cols;
   }
   // append log
   if(op.logMsg){
@@ -575,22 +731,85 @@ function go(v){
   if(v==='give')renderGive();
   if(v==='take')renderTake();
   if(v==='board')renderBoard();
-  if(v==='settings'){renderBaseAdj();renderTeamNameEditor();renderLog();}
+  if(v==='settings')enterSettings();
+}
+
+function enterSettings(){
+  const unlocked=isSettingsUnlocked();
+  document.getElementById('settings-locked').style.display=unlocked?'none':'block';
+  document.getElementById('settings-content').style.display=unlocked?'block':'none';
+  if(!unlocked){
+    const pw=document.getElementById('settings-pw-input');
+    if(pw){pw.value='';pw.focus();}
+    return;
+  }
+  renderBaseAdj();renderColourToggles();renderTeamNameEditor();renderLog();renderSettingsRateInputs();renderPasswordCard();
+  const dn=document.getElementById('device-name-input');
+  if(dn)dn.value=getDeviceName();
+}
+
+async function submitSettingsPassword(){
+  const pw=document.getElementById('settings-pw-input').value;
+  if(!pw){toast('Enter the password');return;}
+  const hash=await hashPassword(pw);
+  if(hash===DB.settingsPasswordHash){
+    localStorage.setItem('mg7_unlocked_hash',hash);
+    toast('Unlocked');
+    enterSettings();
+  }else{
+    toast('Incorrect password');
+  }
+}
+
+function renderPasswordCard(){
+  const hasPw=!!DB.settingsPasswordHash;
+  document.getElementById('password-card-ttl').textContent=hasPw?'Change settings password':'Protect settings with a password';
+  document.getElementById('password-card-sub').textContent=hasPw
+    ?'This device is unlocked. Set a new password to change who can get into Settings, or reset it to open Settings to everyone.'
+    :'Right now anyone can open Settings. Set a password so only devices that know it can get in.';
+  document.getElementById('password-set-btn').textContent=hasPw?'Change password':'Set password';
+  document.getElementById('password-reset-btn').style.display=hasPw?'inline-block':'none';
+  document.getElementById('new-pw-1').value='';
+  document.getElementById('new-pw-2').value='';
+}
+
+async function setNewSettingsPassword(){
+  const pw1=document.getElementById('new-pw-1').value;
+  const pw2=document.getElementById('new-pw-2').value;
+  if(!pw1){toast('Enter a password first');return;}
+  if(pw1!==pw2){toast('Passwords do not match');return;}
+  const hash=await hashPassword(pw1);
+  const op={type:'setSettingsPassword',hash,logMsg:`${getDeviceName()} set the settings password`};
+  DB=applyOpToState(DB,op);lsSave(DB);
+  localStorage.setItem('mg7_unlocked_hash',hash); // this device stays unlocked
+  toast('Password set');
+  renderPasswordCard();renderLog();
+  atomicWrite(op);
+}
+
+function resetSettingsPassword(){
+  if(!confirm('Remove the settings password? Anyone will be able to open Settings until a new one is set.'))return;
+  const op={type:'resetSettingsPassword',logMsg:`${getDeviceName()} removed the settings password`};
+  DB=applyOpToState(DB,op);lsSave(DB);
+  localStorage.removeItem('mg7_unlocked_hash');
+  toast('Password removed — Settings open to everyone');
+  renderPasswordCard();renderLog();
+  atomicWrite(op);
 }
 
 // ═══════════════════════════════════════════════════════════════
 // RENDER — POINTS RATE
 // ═══════════════════════════════════════════════════════════════
 function renderRates(){
-  const gs=globalStock(),{pts,ranks,sorted}=calcPtVals(gs);
-  document.getElementById('rate-cards').innerHTML=C.map(c=>{
+  const gs=globalStock(),{pts,ranks,sorted,N}=calcPtVals(gs);
+  document.getElementById('rate-cards').innerHTML=AC().map(c=>{
     const p=pts[c.key],rk=ranks[c.key];
     return`<div class="rcard">
       <div class="rorb" style="background:${c.hbg};"></div>
       <div class="rname" style="color:${c.htc};">${c.label}</div>
       <div class="rtotal" style="color:${c.hex};">${gs[c.key]}</div>
       <div class="rbadge" style="background:${c.hbg};color:${c.htc};">${p} pt${p!==1?'s':''}</div>
-      <div class="rrank">${RLABELS[rk]}</div>
+      <div class="rrank">${rankLabel(rk,N)}</div>
     </div>`;
   }).join('');
   document.getElementById('rank-table').innerHTML=sorted.map((x,i)=>{
@@ -602,7 +821,7 @@ function renderRates(){
       <div class="rtstk" style="color:${col.hex};">${x.count} in stock</div>
       <div>
         <div class="rtpts" style="color:${col.htc};">${p}pt</div>
-        <div class="rtlabel">${RLABELS[i]}</div>
+        <div class="rtlabel">${rankLabel(i,N)}</div>
       </div>
     </div>`;
   }).join('');
@@ -613,7 +832,7 @@ function renderRates(){
 // ═══════════════════════════════════════════════════════════════
 function renderGive(){
   const gs=globalStock(),{pts}=calcPtVals(gs);
-  document.getElementById('give-cpick').innerHTML=C.map(c=>{
+  document.getElementById('give-cpick').innerHTML=AC().map(c=>{
     const sel=gColour===c.key;
     return`<button class="cbtn${sel?' sel':''}" onclick="gPickColour('${c.key}')"
       style="${sel?'border-color:'+c.hex+';background:'+c.hbg:''}">
@@ -623,6 +842,10 @@ function renderGive(){
       <div class="csub">${pts[c.key]}pt/marble</div>
     </button>`;
   }).join('');
+  if(gColour&&!AC().some(c=>c.key===gColour)){
+    gColour=null;document.getElementById('gC1').textContent='';
+    document.getElementById('gS2').classList.add('locked');
+  }
 }
 function gPickColour(key){
   gColour=key;
@@ -662,35 +885,58 @@ function confirmGive(){
 // RENDER — TAKE MARBLES
 // ═══════════════════════════════════════════════════════════════
 function renderTake(){
-  renderTakeRateInputs();
+  renderTakeRateDisplay();
   renderTakeTeamGrid();
   renderTakeCpick();
   updateTakePrev();
 }
-function renderTakeRateInputs(){
-  const gs=globalStock(),{pts}=calcPtVals(gs);
+// The current effective rate for a colour: a saved override, else the live-calculated value
+function effectiveRate(key){
+  const{pts}=calcPtVals(globalStock());
+  return(DB.takeRates&&DB.takeRates[key]!==undefined)?DB.takeRates[key]:pts[key];
+}
+// Read-only rate display on the Take Marbles page
+function renderTakeRateDisplay(){
   const el=document.getElementById('take-rate-inputs');
-  if(!el.querySelector('input')){
-    el.innerHTML=C.map(c=>`<div class="ri-field">
+  if(!el)return;
+  el.innerHTML=AC().map(c=>`<div class="ri-field">
       <label style="color:${c.htc};">${c.emoji} ${c.label}</label>
-      <input type="number" id="tr-${c.key}" value="${pts[c.key]}" min="0" step="0.1"
-        oninput="checkTakeRates()" style="border-color:${c.hbg};">
+      <div class="ri-value" style="color:${c.hex};">${effectiveRate(c.key)}</div>
     </div>`).join('');
-  }
-  checkTakeRates();
 }
-function loadLiveRates(){
+// Editable rate inputs, shown only inside unlocked Settings
+function renderSettingsRateInputs(){
   const gs=globalStock(),{pts}=calcPtVals(gs);
-  C.forEach(c=>{const i=document.getElementById('tr-'+c.key);if(i)i.value=pts[c.key];});
-  checkTakeRates();toast('Live rates loaded');
+  const el=document.getElementById('settings-rate-inputs');
+  if(!el)return;
+  el.innerHTML=AC().map(c=>{
+    const val=(DB.takeRates&&DB.takeRates[c.key]!==undefined)?DB.takeRates[c.key]:pts[c.key];
+    return`<div class="ri-field">
+      <label style="color:${c.htc};">${c.emoji} ${c.label}</label>
+      <input type="number" id="sr-${c.key}" value="${val}" min="0" step="0.1"
+        oninput="onSettingsRateChange()" style="border-color:${c.hbg};">
+    </div>`;
+  }).join('');
 }
-function clearTakeRates(){C.forEach(c=>{const i=document.getElementById('tr-'+c.key);if(i)i.value='';});checkTakeRates();}
-function checkTakeRates(){
-  const allSet=C.every(c=>{const v=parseFloat(document.getElementById('tr-'+c.key)?.value);return!isNaN(v)&&v>=0;});
-  document.getElementById('tC1').textContent=allSet?'✓ Rates set':'';
-  document.getElementById('tS2').classList.toggle('locked',!allSet);
-  if(!allSet){tTeam=null;tColour=null;document.getElementById('tS3').classList.add('locked');}
-  updateTakePrev();
+let settingsRateSaveTimer=null;
+function onSettingsRateChange(){
+  clearTimeout(settingsRateSaveTimer);
+  settingsRateSaveTimer=setTimeout(pushSettingsRates,500);
+}
+function pushSettingsRates(){
+  const rates={};
+  AC().forEach(c=>{
+    const v=parseFloat(document.getElementById('sr-'+c.key)?.value);
+    if(!isNaN(v)&&v>=0)rates[c.key]=v;
+  });
+  const op={type:'setTakeRates',rates,logMsg:`${getDeviceName()} updated point rates`};
+  DB=applyOpToState(DB,op);lsSave(DB);renderTakeRateDisplay();
+  atomicWrite(op);
+}
+function useLiveRates(){
+  const gs=globalStock(),{pts}=calcPtVals(gs);
+  AC().forEach(c=>{const i=document.getElementById('sr-'+c.key);if(i)i.value=pts[c.key];});
+  pushSettingsRates();toast('Live rates loaded');
 }
 function renderTakeTeamGrid(){
   document.getElementById('take-tgrid').innerHTML=DB.teams.map(t=>
@@ -698,7 +944,7 @@ function renderTakeTeamGrid(){
       <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name}</span>
       <span class="tsub">${+(t.points||0).toFixed(1)}pt</span>
     </button>`
-  ).join('');
+  ).join('')||'<p style="font-size:12px;color:var(--mu);">No teams yet — add one in Settings.</p>';
 }
 function tPickTeam(id){
   tTeam=id;tColour=null;
@@ -709,9 +955,9 @@ function tPickTeam(id){
   renderTakeTeamGrid();renderTakeCpick();updateTakePrev();
 }
 function renderTakeCpick(){
-  document.getElementById('take-cpick').innerHTML=C.map(c=>{
+  document.getElementById('take-cpick').innerHTML=AC().map(c=>{
     const stock=DB.stock[c.key]||0;
-    const rate=parseFloat(document.getElementById('tr-'+c.key)?.value)||0;
+    const rate=effectiveRate(c.key);
     const sel=tColour===c.key;
     return`<button class="cbtn${sel?' sel':''}" onclick="tPickColour('${c.key}')"
         style="${sel?'border-color:'+c.hex+';background:'+c.hbg:''}${stock===0?';opacity:.4':''}">
@@ -721,6 +967,9 @@ function renderTakeCpick(){
       <div class="csub">${rate}pt/marble</div>
     </button>`;
   }).join('');
+  if(tColour&&!AC().some(c=>c.key===tColour)){
+    tColour=null;document.getElementById('tC3').textContent='';
+  }
 }
 function tPickColour(key){
   tColour=key;
@@ -735,7 +984,7 @@ function updateTakePrev(){
   const team=tTeam!==null?DB.teams.find(t=>t.id===tTeam):null;
   const col=tColour?C.find(c=>c.key===tColour):null;
   const amt=parseInt(document.getElementById('take-amt').value)||1;
-  const rate=tColour?parseFloat(document.getElementById('tr-'+tColour)?.value)||0:0;
+  const rate=tColour?effectiveRate(tColour):0;
   const prev=document.getElementById('take-prev');
   if(!team||!col){prev.innerHTML='Complete steps above';return;}
   const stock=DB.stock[col.key]||0,actualTaken=Math.min(amt,stock);
@@ -749,7 +998,7 @@ function confirmTake(){
   const team=DB.teams.find(t=>t.id===tTeam);
   const col=C.find(c=>c.key===tColour);
   const amt=Math.max(1,parseInt(document.getElementById('take-amt').value)||1);
-  const rate=parseFloat(document.getElementById('tr-'+tColour)?.value)||0;
+  const rate=effectiveRate(tColour);
   const stock=DB.stock[col.key]||0;
   if(stock===0){toast('No '+col.label+' marbles in stock');return;}
   const actualTaken=Math.min(amt,stock);
@@ -779,10 +1028,10 @@ function renderBoard(){
     `<div class="lbrow">
       <div class="lbrk ${i<3?'m':''}">${i<3?medals[i]:i+1}</div>
       <div class="lbname">${t.name}</div>
-      <div class="lbchips">${C.filter(c=>t.marbles[c.key]>0).map(c=>`<span class="chip" style="background:${c.hbg};color:${c.htc};">${c.emoji}${t.marbles[c.key]}</span>`).join('')}</div>
+      <div class="lbchips">${AC().filter(c=>t.marbles[c.key]>0).map(c=>`<span class="chip" style="background:${c.hbg};color:${c.htc};">${c.emoji}${t.marbles[c.key]}</span>`).join('')}</div>
       <div class="lbpts">${+(t.points||0).toFixed(1)}<small>pts</small></div>
     </div>`
-  ).join('');
+  ).join('')||'<div class="lbrow"><div class="lbname" style="color:var(--mu);">No teams yet</div></div>';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -790,38 +1039,85 @@ function renderBoard(){
 // ═══════════════════════════════════════════════════════════════
 function renderBaseAdj(){
   const el=document.getElementById('base-adj');
-  if(!el.querySelector('input')){
-    el.innerHTML=C.map(c=>`<div class="ba-field">
+  el.innerHTML=AC().map(c=>`<div class="ba-field">
       <label style="color:${c.htc};">${c.emoji} ${c.label}</label>
       <input type="number" id="ba-${c.key}" value="0" step="1" style="border-color:${c.hbg};">
     </div>`).join('');
-  }
 }
 function applyBase(){
   const deltas={};
-  C.forEach(c=>{deltas[c.key]=parseInt(document.getElementById('ba-'+c.key)?.value||'0')||0;});
+  AC().forEach(c=>{deltas[c.key]=parseInt(document.getElementById('ba-'+c.key)?.value||'0')||0;});
   const op={type:'adjStock',deltas,logMsg:'Adjusted base stock'};
   DB=applyOpToState(DB,op);lsSave(DB);renderAll();
-  C.forEach(c=>{const i=document.getElementById('ba-'+c.key);if(i)i.value=0;});
+  AC().forEach(c=>{const i=document.getElementById('ba-'+c.key);if(i)i.value=0;});
   toast('Base stock updated');atomicWrite(op);
 }
 function setExactBase(){
   const vals={};
-  C.forEach(c=>{const v=parseInt(document.getElementById('ba-'+c.key)?.value||'0')||0;if(v>0)vals[c.key]=v;});
+  AC().forEach(c=>{const v=parseInt(document.getElementById('ba-'+c.key)?.value||'0')||0;if(v>0)vals[c.key]=v;});
   if(!Object.keys(vals).length){toast('Enter values first');return;}
   const op={type:'setStock',values:vals,logMsg:'Set exact base stock'};
   DB=applyOpToState(DB,op);lsSave(DB);renderAll();
-  C.forEach(c=>{const i=document.getElementById('ba-'+c.key);if(i)i.value=0;});
+  AC().forEach(c=>{const i=document.getElementById('ba-'+c.key);if(i)i.value=0;});
   toast('Base stock set');atomicWrite(op);
 }
+
+// ── Colour toggles ──
+function renderColourToggles(){
+  const active=DB.activeColours||ALL_CKEYS;
+  document.getElementById('colour-toggles').innerHTML=C.map(c=>{
+    const on=active.includes(c.key);
+    return`<div class="ctog${on?'':' off'}" onclick="toggleColour('${c.key}')">
+      <div class="corb" style="background:${c.hbg};"></div>
+      <div class="cname" style="color:${c.htc};">${c.label}</div>
+      <div style="font-size:11px;color:var(--mu);font-family:var(--mono);">${on?'On':'Off'}</div>
+    </div>`;
+  }).join('');
+}
+function toggleColour(key){
+  const active=(DB.activeColours||ALL_CKEYS.slice()).slice();
+  const idx=active.indexOf(key);
+  if(idx>-1){
+    if(active.length===1){toast('At least one colour must stay active');return;}
+    active.splice(idx,1);
+  }else{
+    active.push(key);
+  }
+  const col=C.find(c=>c.key===key);
+  const op={type:'setActiveColours',colours:active,logMsg:`${active.includes(key)?'Enabled':'Disabled'} ${col.emoji} ${col.label} colour`};
+  DB=applyOpToState(DB,op);lsSave(DB);renderAll();renderColourToggles();
+  toast(`${col.label} ${active.includes(key)?'enabled':'disabled'}`);
+  atomicWrite(op);
+}
+
+// ── Team management ──
 function renderTeamNameEditor(){
   const el=document.getElementById('team-name-editor');
   if(!el)return;
-  el.innerHTML=DB.teams.map(t=>`<div style="display:flex;flex-direction:column;gap:5px;">
-    <label style="font-size:11px;color:var(--mu);">Team ${t.id+1}</label>
-    <input type="text" id="tname-${t.id}" value="${t.name.replace(/"/g,'&quot;')}"
-      style="background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:8px 10px;color:var(--tx);font-family:var(--font);font-size:13px;">
-  </div>`).join('');
+  el.innerHTML=DB.teams.map(t=>`<div class="team-row">
+    <input type="text" id="tname-${t.id}" value="${t.name.replace(/"/g,'&quot;')}">
+    <button class="xbtn" title="Delete team" onclick="deleteTeam(${t.id})">×</button>
+  </div>`).join('')||'<p style="font-size:12px;color:var(--mu);">No teams yet — add one below.</p>';
+}
+function addTeam(){
+  const inp=document.getElementById('new-team-name');
+  const name=(inp.value||'').trim();
+  if(!name){toast('Enter a team name first');return;}
+  const op={type:'addTeam',name,logMsg:`Added team "${name}"`};
+  DB=applyOpToState(DB,op);lsSave(DB);renderAll();renderTeamNameEditor();
+  inp.value='';
+  toast(`Team "${name}" added`);
+  atomicWrite(op);
+}
+function deleteTeam(id){
+  const team=DB.teams.find(t=>t.id===id);
+  if(!team)return;
+  if(!confirm(`Delete "${team.name}"? This removes its marbles and points permanently.`))return;
+  const op={type:'deleteTeam',teamId:id,logMsg:`Deleted team "${team.name}"`};
+  DB=applyOpToState(DB,op);lsSave(DB);renderAll();renderTeamNameEditor();
+  if(tTeam===id){tTeam=null;document.getElementById('tS3')?.classList.add('locked');}
+  toast(`Team "${team.name}" deleted`);
+  atomicWrite(op);
 }
 function saveTeamNames(){
   const names=DB.teams.map(t=>{
@@ -833,6 +1129,7 @@ function saveTeamNames(){
   DB=applyOpToState(DB,op);lsSave(DB);renderAll();renderTeamNameEditor();
   toast('Team names saved');atomicWrite(op);
 }
+
 function resetPoints(){
   if(!confirm('Reset ALL team points to 0?'))return;
   const op={type:'resetPoints',logMsg:'Reset all points'};
@@ -846,7 +1143,7 @@ function resetMarbles(){
 function resetAll(){
   if(!confirm('Reset EVERYTHING?'))return;
   const op={type:'resetAll',logMsg:'Full reset'};
-  DB=applyOpToState(DB,op);lsSave(DB);renderAll();toast('Everything reset');atomicWrite(op);
+  DB=applyOpToState(DB,op);lsSave(DB);renderAll();renderColourToggles();renderTeamNameEditor();toast('Everything reset');atomicWrite(op);
 }
 function renderLog(){
   const log=DB.log||[];
@@ -856,8 +1153,6 @@ function renderLog(){
 }
 function clearLog(){
   DB.log=[];lsSave(DB);renderLog();
-  atomicWrite({type:'resetAll',logMsg:null}); // won't actually reset — log cleared via direct assignment above
-  // Simpler: just push a lightweight log-clear op
   fbGet().then(got=>{if(!got)return;const r=ensureSchema(got.data);r.log=[];r.version=(r.version||0)+1;r.updatedAt=Date.now();fbPut(r,got.etag);});
   toast('Log cleared');
 }
@@ -868,6 +1163,7 @@ function clearLog(){
 function renderAll(){
   renderRates();
   renderGive();
+  renderTakeRateDisplay();
   renderTakeTeamGrid();
   renderTakeCpick();
   updateTakePrev();
@@ -884,8 +1180,10 @@ function toast(m){const e=document.getElementById('toast');e.textContent=m;e.cla
 // BOOT
 // ═══════════════════════════════════════════════════════════════
 (async function boot(){
+  ensureDeviceName();
   DB=ensureSchema(lsLoad()||mkDefault());
   renderBaseAdj();
+  renderColourToggles();
   renderAll();
   setSS('w','Connecting…');
 
@@ -893,7 +1191,7 @@ function toast(m){const e=document.getElementById('toast');e.textContent=m;e.cla
   if(got&&got.data){
     const remote=ensureSchema(got.data);
     if((remote.version||0)>=(DB.version||0)){
-      DB=remote;lsSave(DB);renderAll();
+      DB=remote;lsSave(DB);renderAll();renderBaseAdj();renderColourToggles();
     } else {
       // Local is newer — push local state to Firebase
       await fbPut(DB,got.etag);
@@ -906,8 +1204,6 @@ function toast(m){const e=document.getElementById('toast');e.textContent=m;e.cla
     setSS(got?'ok':'e',got?'Synced':'Cannot reach Firebase');
   }
 
-  // Pre-load rates for Take tab
-  loadLiveRates();
   startPoll();
 })();
 </script>
