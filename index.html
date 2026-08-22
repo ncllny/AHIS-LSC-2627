@@ -181,6 +181,7 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   <div class="ntab"     onclick="go('give')">Give Marbles</div>
   <div class="ntab"     onclick="go('take')">Take Marbles &amp; Give Points</div>
   <div class="ntab"     onclick="go('board')">Leaderboard</div>
+  <div class="ntab"     onclick="go('myactivity')">My Activity</div>
   <div class="ntab"     onclick="go('settings')">Settings</div>
 </nav>
 
@@ -300,6 +301,12 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 <div id="view-board" class="view">
   <div class="ttl" style="margin-bottom:16px;">Teams ranked by total points earned</div>
   <div class="lb" id="lb"></div>
+</div>
+
+<!-- MY ACTIVITY (this device only, no password needed) -->
+<div id="view-myactivity" class="view">
+  <div class="ttl" style="margin-bottom:16px;">This device's activity</div>
+  <div class="log-wrap" id="my-log-wrap"></div>
 </div>
 
 <!-- ⑤ SETTINGS -->
@@ -641,7 +648,7 @@ function applyOpToState(state,op){
   // append log
   if(op.logMsg){
     s.log=s.log||[];
-    s.log.unshift({t:Date.now(),msg:op.logMsg});
+    s.log.unshift({t:Date.now(),msg:op.logMsg,deviceId:getDeviceId(),deviceName:getDeviceName()});
     if(s.log.length>200)s.log.length=200;
   }
   s.version=(s.version||0)+1;
@@ -722,7 +729,7 @@ function showConflictBanner(){
 // ═══════════════════════════════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════════════════════════════
-const VIEWS=['rates','give','take','board','settings'];
+const VIEWS=['rates','give','take','board','myactivity','settings'];
 function go(v){
   document.querySelectorAll('.ntab').forEach((el,i)=>el.classList.toggle('on',VIEWS[i]===v));
   document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
@@ -731,6 +738,7 @@ function go(v){
   if(v==='give')renderGive();
   if(v==='take')renderTake();
   if(v==='board')renderBoard();
+  if(v==='myactivity')renderMyLog();
   if(v==='settings')enterSettings();
 }
 
@@ -1148,11 +1156,20 @@ function resetAll(){
 function renderLog(){
   const log=DB.log||[];
   document.getElementById('log-wrap').innerHTML=log.length
-    ?log.map(e=>`<div class="log-row"><div class="log-time">${new Date(e.t).toLocaleTimeString()}</div><div class="log-msg">${e.msg}</div></div>`).join('')
+    ?log.map(e=>`<div class="log-row"><div class="log-time">${new Date(e.t).toLocaleTimeString()}</div><div class="log-msg"><strong style="color:var(--tx);">${(e.deviceName||'Unknown device').replace(/</g,'&lt;')}:</strong> ${e.msg}</div></div>`).join('')
     :'<div class="log-row"><div class="log-msg" style="color:var(--mu);">No activity yet</div></div>';
 }
+function renderMyLog(){
+  const wrap=document.getElementById('my-log-wrap');
+  if(!wrap)return;
+  const myId=getDeviceId();
+  const log=(DB.log||[]).filter(e=>e.deviceId===myId);
+  wrap.innerHTML=log.length
+    ?log.map(e=>`<div class="log-row"><div class="log-time">${new Date(e.t).toLocaleTimeString()}</div><div class="log-msg">${e.msg}</div></div>`).join('')
+    :'<div class="log-row"><div class="log-msg" style="color:var(--mu);">No activity from this device yet</div></div>';
+}
 function clearLog(){
-  DB.log=[];lsSave(DB);renderLog();
+  DB.log=[];lsSave(DB);renderLog();renderMyLog();
   fbGet().then(got=>{if(!got)return;const r=ensureSchema(got.data);r.log=[];r.version=(r.version||0)+1;r.updatedAt=Date.now();fbPut(r,got.etag);});
   toast('Log cleared');
 }
@@ -1168,6 +1185,7 @@ function renderAll(){
   renderTakeCpick();
   updateTakePrev();
   renderBoard();
+  renderMyLog();
 }
 
 // ═══════════════════════════════════════════════════════════════
