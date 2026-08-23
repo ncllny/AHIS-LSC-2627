@@ -195,9 +195,7 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   <div class="rate-grid" id="rate-cards"></div>
   <div class="ttl">Ranked from least → most common</div>
   <div class="rank-table" id="rank-table"></div>
-  <div style="margin-top:14px;font-size:12px;color:var(--mu);line-height:1.7;">
-    Rarer marble colours are worth more. The <strong style="color:var(--tx);">least common</strong> colour gets the highest rate, and the <strong style="color:var(--tx);">most common</strong> colour gets 1 point.
-  </div>
+  <div id="rate-method-note" style="margin-top:14px;font-size:12px;color:var(--mu);line-height:1.7;"></div>
 </div>
 
 <!-- ② GIVE MARBLES -->
@@ -337,10 +335,18 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 
     <div class="card" style="margin-bottom:20px;">
       <div class="ttl">Point rate per marble colour</div>
-      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">How many points each marble colour is worth when taken from a team. You can enter rates manually, or calculate and save rates from current stock. Shown as view-only on the Take Marbles page.</p>
+      <p style="font-size:12px;color:var(--mu);margin-bottom:14px;">How many points each marble colour is worth when taken from a team. Choose a calculation method, then calculate and save rates from current stock, or enter rates manually. Shown as view-only on the Take Marbles page.</p>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+        <label for="rate-calculation" style="font-size:12px;color:var(--mu);">Stock-based calculation</label>
+        <select id="rate-calculation" onchange="saveRateCalculation()" style="background:var(--bg);border:1px solid var(--bd2);border-radius:var(--r);padding:8px 10px;color:var(--tx);font-family:var(--font);font-size:13px;">
+          <option value="scarcity">Least stock = most points</option>
+          <option value="middle">Middle stock = most points</option>
+        </select>
+      </div>
+      <p style="font-size:11px;color:var(--mu);margin:-4px 0 14px;">Colours with the same stock always receive the lowest rate for their tied group. Changing the method does not change saved Take Marbles rates until you calculate and save them.</p>
       <div class="rate-inputs" id="settings-rate-inputs"></div>
       <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-        <button class="btn sm pp" onclick="useLiveRates()">Calculate &amp; save stock-based rates</button>
+        <button class="btn sm pp" onclick="useLiveRates()">Calculate &amp; save rates using this method</button>
       </div>
     </div>
 
@@ -493,7 +499,7 @@ function mkDefault(){
     return{id:i,name,marbles:m,points:0};
   });
   const stock={};C.forEach(c=>stock[c.key]=20);
-  return{teams,stock,log:[],version:0,updatedAt:Date.now(),activeColours:ALL_CKEYS.slice(),nextTeamId:teams.length,takeRates:{},settingsPasswordHash:null};
+  return{teams,stock,log:[],version:0,updatedAt:Date.now(),activeColours:ALL_CKEYS.slice(),nextTeamId:teams.length,takeRates:{},rateCalculation:'scarcity',settingsPasswordHash:null};
 }
 
 function ensureSchema(d){
@@ -504,6 +510,7 @@ function ensureSchema(d){
   d.activeColours=d.activeColours.filter(k=>ALL_CKEYS.includes(k));
   if(!d.activeColours.length)d.activeColours=ALL_CKEYS.slice();
   if(!d.takeRates||typeof d.takeRates!=='object')d.takeRates={};
+  if(d.rateCalculation!=='middle'&&d.rateCalculation!=='scarcity')d.rateCalculation='scarcity';
   const initialRates=initialTakeRates(d);
   C.forEach(c=>{
     if(typeof d.takeRates[c.key]!=='number'||d.takeRates[c.key]<0)d.takeRates[c.key]=initialRates[c.key];
@@ -534,17 +541,33 @@ function globalStock(){
   return gs;
 }
 
-function calcPtVals(gs){
-  const active=AC();
+function getRateCalculation(state=DB){
+  return state?.rateCalculation==='middle'?'middle':'scarcity';
+}
+
+function calcPtValsFor(active,gs,method){
   const N=active.length;
   const sorted=active.map(c=>({key:c.key,count:gs[c.key]||0})).sort((a,b)=>a.count-b.count);
   const pts={},ranks={};
   sorted.forEach((x,i)=>{
-    // Least common colour gets the highest value; most common gets 1 point.
-    pts[x.key]=N-i;
+    const rawRate=method==='middle'?Math.min(i,N-1-i)+1:N-i;
+    pts[x.key]=rawRate;
     ranks[x.key]=i;
   });
+  // A tied stock group receives its lowest possible rate, regardless of colour.
+  let start=0;
+  while(start<sorted.length){
+    let end=start;
+    while(end+1<sorted.length&&sorted[end+1].count===sorted[start].count)end++;
+    const lowestRate=Math.min(...sorted.slice(start,end+1).map(item=>pts[item.key]));
+    for(let i=start;i<=end;i++)pts[sorted[i].key]=lowestRate;
+    start=end+1;
+  }
   return{pts,ranks,sorted,N};
+}
+
+function calcPtVals(gs){
+  return calcPtValsFor(AC(),gs,getRateCalculation());
 }
 
 // Creates a one-time starting rate set for new or legacy game data.
@@ -557,10 +580,9 @@ function initialTakeRates(state){
   active.forEach(c=>{
     stock[c.key]=(state.stock?.[c.key]||0)+(state.teams||[]).reduce((sum,t)=>sum+(t.marbles?.[c.key]||0),0);
   });
-  const sorted=active.map(c=>({key:c.key,count:stock[c.key]||0})).sort((a,b)=>a.count-b.count);
+  const {pts}=calcPtValsFor(active,stock,getRateCalculation(state));
   const rates={};
-  C.forEach(c=>rates[c.key]=1);
-  sorted.forEach((item,index)=>{rates[item.key]=Math.min(index,sorted.length-1-index)+1;});
+  C.forEach(c=>rates[c.key]=pts[c.key]??1);
   return rates;
 }
 
@@ -641,9 +663,11 @@ function applyOpToState(state,op){
   }else if(op.type==='resetMarbles'){
     s.teams.forEach(t=>C.forEach(c=>t.marbles[c.key]=0));
   }else if(op.type==='resetAll'){
-    const fresh=mkDefault();s.teams=fresh.teams;s.stock=fresh.stock;s.activeColours=fresh.activeColours;s.nextTeamId=fresh.nextTeamId;s.takeRates=fresh.takeRates;
+    const fresh=mkDefault();s.teams=fresh.teams;s.stock=fresh.stock;s.activeColours=fresh.activeColours;s.nextTeamId=fresh.nextTeamId;s.takeRates=fresh.takeRates;s.rateCalculation=fresh.rateCalculation;
   }else if(op.type==='setTakeRates'){
     s.takeRates={...(s.takeRates||{}),...op.rates};
+  }else if(op.type==='setRateCalculation'){
+    s.rateCalculation=op.method==='middle'?'middle':'scarcity';
   }else if(op.type==='setSettingsPassword'){
     s.settingsPasswordHash=op.hash;
   }else if(op.type==='resetSettingsPassword'){
@@ -768,7 +792,7 @@ function enterSettings(){
     if(pw){pw.value='';pw.focus();}
     return;
   }
-  renderBaseAdj();renderColourToggles();renderTeamNameEditor();renderLog();renderSettingsRateInputs();renderPasswordCard();
+  renderBaseAdj();renderColourToggles();renderTeamNameEditor();renderLog();renderSettingsRateInputs();renderRateCalculationControl();renderPasswordCard();
   const dn=document.getElementById('device-name-input');
   if(dn)dn.value=getDeviceName();
 }
@@ -850,6 +874,10 @@ function renderRates(){
       </div>
     </div>`;
   }).join('');
+  const note=document.getElementById('rate-method-note');
+  if(note)note.innerHTML=getRateCalculation()==='middle'
+    ?'Colours near the <strong style="color:var(--tx);">middle stock level</strong> are worth the most. Colours tied on stock share the <strong style="color:var(--tx);">lowest rate</strong> for that group.'
+    :'Rarer marble colours are worth more: the <strong style="color:var(--tx);">least common</strong> colour gets the highest rate and the <strong style="color:var(--tx);">most common</strong> gets the lowest. Colours tied on stock share the <strong style="color:var(--tx);">lowest rate</strong> for that group.';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -929,6 +957,17 @@ function renderTakeRateDisplay(){
     </div>`).join('');
 }
 // Editable rate inputs, shown only inside unlocked Settings
+function renderRateCalculationControl(){
+  const select=document.getElementById('rate-calculation');
+  if(select)select.value=getRateCalculation();
+}
+function saveRateCalculation(){
+  const method=document.getElementById('rate-calculation')?.value==='middle'?'middle':'scarcity';
+  const op={type:'setRateCalculation',method,logMsg:getDeviceName()+' selected the '+(method==='middle'?'middle-stock':'least-stock')+' point calculation'};
+  DB=applyOpToState(DB,op);lsSave(DB);renderAll();
+  toast('Calculation method saved — calculate and save rates to apply it to Take Marbles');
+  atomicWrite(op);
+}
 function renderSettingsRateInputs(){
   const el=document.getElementById('settings-rate-inputs');
   if(!el)return;
