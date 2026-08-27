@@ -160,8 +160,9 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
   header{padding:12px 14px;align-items:center;}
   .logo h1{font-size:15px;}
   .spill{padding:5px 10px;font-size:10px;}
-  nav{position:sticky;top:0;z-index:100;padding:0 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
-  .ntab{padding:13px 12px;min-height:44px;font-size:12px;scroll-snap-align:start;}
+  nav{position:sticky;top:0;z-index:100;padding:0 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;touch-action:pan-x;overscroll-behavior-x:contain;scrollbar-width:none;}
+  nav::-webkit-scrollbar{display:none;}
+  .ntab{padding:13px 12px;min-height:44px;font-size:12px;scroll-snap-align:start;flex:0 0 auto;}
   .wrap{padding:18px 14px 48px;}
   .card{padding:16px 14px;border-radius:12px;}
   .step-head{padding:12px 14px;gap:9px;flex-wrap:wrap;}
