@@ -154,7 +154,61 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 #conflict-banner.on{display:block;}
 #toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(50px);background:var(--s2);border:1px solid var(--bd2);border-radius:20px;padding:8px 20px;font-size:13px;color:var(--tx);opacity:0;pointer-events:none;z-index:300;white-space:nowrap;transition:transform .22s,opacity .22s;}
 #toast.on{transform:translateX(-50%) translateY(0);opacity:1;}
-@media(max-width:600px){.tgrid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}}
+/* Mobile layout and touch-target improvements */
+@media(max-width:600px){
+  body{font-size:14px;padding-bottom:env(safe-area-inset-bottom);}
+  header{padding:12px 14px;align-items:center;}
+  .logo h1{font-size:15px;}
+  .spill{padding:5px 10px;font-size:10px;}
+  nav{position:sticky;top:0;z-index:100;padding:0 8px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;}
+  .ntab{padding:13px 12px;min-height:44px;font-size:12px;scroll-snap-align:start;}
+  .wrap{padding:18px 14px 48px;}
+  .card{padding:16px 14px;border-radius:12px;}
+  .step-head{padding:12px 14px;gap:9px;flex-wrap:wrap;}
+  .stitle{font-size:13px;}
+  .schosen{margin-left:33px;width:calc(100% - 33px);font-size:11px;}
+  .step-body{padding:14px;}
+  .cpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .cbtn{width:100%;min-height:128px;padding:12px 8px;}
+  .tgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .tbtn{min-height:48px;padding:9px 10px;font-size:12px;}
+  .amtrow{gap:10px;}
+  .stbtn{width:44px;height:44px;}
+  .stinp{height:44px;width:62px;font-size:18px;}
+  .qbtn{min-height:36px;padding:7px 10px;}
+  .cbar{display:grid;grid-template-columns:1fr;gap:10px;}
+  .cprev{min-width:0;width:100%;}
+  .cbar .btn{width:100%;min-height:48px;}
+  .rate-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:18px;}
+  .rcard{padding:14px 8px;}
+  .rtrow{gap:8px;padding:11px 10px;}
+  .rtrk{width:16px;}
+  .rtname{font-size:13px;}
+  .rtstk{font-size:11px;}
+  .rtpts{font-size:16px;min-width:42px;}
+  .rate-inputs{gap:8px;justify-content:space-between;}
+  .ri-field{flex:1 1 64px;}
+  .ri-field input,.ri-value{width:100%;max-width:76px;min-height:40px;}
+  .base-adj{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .ba-field input{width:100%;min-height:40px;}
+  .team-row{align-items:stretch;min-height:44px;}
+  .team-row input{min-height:40px;}
+  .add-team-row{flex-direction:column;}
+  .add-team-row .btn{min-height:44px;}
+  .lbrow{gap:8px;padding:11px 12px;}
+  .lbrk{width:24px;font-size:16px;}
+  .lbchips{display:none;}
+  .lbpts{font-size:17px;min-width:52px;}
+  .log-row{padding:9px 10px;gap:7px;}
+  #conflict-banner{top:10px;width:calc(100% - 28px);padding:10px 12px;font-size:12px;}
+  #toast{bottom:calc(14px + env(safe-area-inset-bottom));max-width:calc(100% - 28px);white-space:normal;text-align:center;padding:9px 14px;}
+}
+@media(max-width:360px){
+  .logo h1 em{display:none;}
+  .rate-grid{grid-template-columns:1fr 1fr;}
+  .qbtn{padding:7px 8px;}
+  .rtrow .rtlabel{display:none;}
+}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-thumb{background:var(--fa);border-radius:3px;}
 </style>
@@ -169,7 +223,6 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
       <div class="lorb" style="background:var(--cB);"></div>
       <div class="lorb" style="background:var(--cG);"></div>
       <div class="lorb" style="background:var(--cY);"></div>
-      <div class="lorb" style="background:var(--cP);"></div>
     </div>
     <h1>Marble Game <em>Controller</em></h1>
   </div>
