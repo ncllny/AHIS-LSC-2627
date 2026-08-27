@@ -156,7 +156,9 @@ nav{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 20px;displa
 #toast.on{transform:translateX(-50%) translateY(0);opacity:1;}
 /* Mobile layout and touch-target improvements */
 @media(max-width:600px){
-  body{font-size:14px;padding-bottom:env(safe-area-inset-bottom);}
+  body{font-size:14px;padding-bottom:env(safe-area-inset-bottom);-webkit-text-size-adjust:100%;}
+  button,input,select,textarea{touch-action:manipulation;}
+  input,select,textarea{font-size:16px;}
   header{padding:12px 14px;align-items:center;}
   .logo h1{font-size:15px;}
   .spill{padding:5px 10px;font-size:10px;}
